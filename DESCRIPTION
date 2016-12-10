@@ -1,5 +1,5 @@
 Package: nicertables
-Title: Make Nice Correlation and Logistic Regression Tables from Raw Data
+Title: Make Nice Correlation and Logistic Regression Tables
 Version: 0.0.0.9000
 Authors@R: person("Jennifer", "Lay", email = "jennifer.lay@psych.ubc.ca", role = c("aut", "cre"))
 Description: This package contains functions that take either a) raw data or b)
@@ -28,3 +28,5 @@ Suggests: testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/jennlay/nicertables
+BugReports: https://github.com/jennlay/nicertables/issues
