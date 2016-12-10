@@ -15,7 +15,7 @@ This function can be used with any numerical raw data.
 
 First, open the raw data file and stick it in a dataframe. There is a raw data file included with this package, called "raw_data_for_correlation_calculation.csv". Here's how to access it:
 
-```{r, echo=FALSE, results='asis'}
+```{r}
 raw_data_for_correlation_function <- as.data.frame(readr::read_csv(
             system.file("extdata", "raw_data_for_correlation_calculation.csv", package = "nicertables")))
 ```
@@ -24,8 +24,8 @@ You can then simply stick the dataframe into the make_cor_tables() function. The
 
 Let's use the function with just the raw data file, and the defaults for all other parameters
 
-```{r, echo=FALSE, results='asis'}
-correlation_output <- nicertables::make_corr_tables(input_data = raw_data_for_correlation_function)
+```{r}
+correlation_results_1 <- nicertables::make_corr_tables(input_data = raw_data_for_correlation_function)
 
 ```
 
@@ -35,26 +35,28 @@ The function also returns an object of type psych. It holds a bunch of informati
 
 For example, to access the correlation table:
 
-```{r, echo=FALSE, results='asis'}
-correlation_output$r
+```{r}
+correlation_results_1$r
 
 ```
 
 And to access the correlation p values:
 
-```{r, echo=FALSE, results='asis'}
-correlation_output$p
+```{r}
+correlation_results_1$p
 
 ```
 
 Let's try the other function parameters:
+
 - Use the path_name parameter to specify where you want your output files to go (default is your home directory, "~/")
+
 - Use the data_name parameter to specify a name for your output files (default is "data")
 
 Here's an example where we change data_name:
 
 ```{r}
-nicertables::make_corr_tables(input_data = raw_data_for_correlation_function, path_name = "~/", data_name = "my_name")
+correlation_results_2 <- nicertables::make_corr_tables(input_data = raw_data_for_correlation_function, path_name = "~/", data_name = "my_name")
 
 ```
 

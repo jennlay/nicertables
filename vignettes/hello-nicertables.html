@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Jennifer lay" />
+
+<meta name="date" content="2016-12-09" />
+
+<title>nicertables package vignette</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%7D%0Apre%20%7B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">nicertables package vignette</h1>
+<h4 class="author"><em>Jennifer lay</em></h4>
+<h4 class="date"><em>2016-12-09</em></h4>
+
+
+
+<div id="how-to-use-the-make_cor_tables-function" class="section level2">
+<h2>1. How to use the make_cor_tables() function</h2>
+<p>This function can be used with any numerical raw data.</p>
+<p>First, open the raw data file and stick it in a dataframe. There is a raw data file included with this package, called “raw_data_for_correlation_calculation.csv”. Here’s how to access it:</p>
+<pre class="sourceCode r"><code class="sourceCode r">raw_data_for_correlation_function &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(readr::<span class="kw">read_csv</span>(
+            <span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;raw_data_for_correlation_calculation.csv&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;nicertables&quot;</span>)))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   T01 = col_integer(),
+##   T02 = col_integer(),
+##   T03 = col_integer(),
+##   T04 = col_integer(),
+##   T05 = col_integer(),
+##   T06 = col_integer(),
+##   T07 = col_integer(),
+##   T08 = col_integer(),
+##   T09 = col_integer(),
+##   T10 = col_integer()
+## )</code></pre>
+<p>You can then simply stick the dataframe into the make_cor_tables() function. The function will then write a nice correlation table to file (a .csv file is what it makes now), and a corresponding correlation p value table (another .csv file).</p>
+<p>Let’s use the function with just the raw data file, and the defaults for all other parameters</p>
+<pre class="sourceCode r"><code class="sourceCode r">correlation_results_1 &lt;-<span class="st"> </span>nicertables::<span class="kw">make_corr_tables</span>(<span class="dt">input_data =</span> raw_data_for_correlation_function)</code></pre>
+<p>We now how two output files, “corrs_mat_data.csv” and “corrs_mat_data.csv”, located in your home directory. This is the default behaviour (we’ll see how to modify it below).</p>
+<p>The function also returns an object of type psych. It holds a bunch of information about your correlation table.</p>
+<p>For example, to access the correlation table:</p>
+<pre class="sourceCode r"><code class="sourceCode r">correlation_results_1$r</code></pre>
+<pre><code>##             T01         T02          T03         T04         T05
+## T01  1.00000000 -0.06543174  0.122090580  0.03161234  0.23431329
+## T02 -0.06543174  1.00000000  0.148146010  0.20956121  0.04568882
+## T03  0.12209058  0.14814601  1.000000000  0.12582417  0.27150576
+## T04  0.03161234  0.20956121  0.125824172  1.00000000 -0.26726989
+## T05  0.23431329  0.04568882  0.271505761 -0.26726989  1.00000000
+## T06  0.15512139  0.04977726  0.267575188  0.23944206  0.07460181
+## T07  0.12300849  0.20415741  0.307770890  0.28700040  0.09449224
+## T08  0.17756018  0.09396546  0.165050039 -0.14058230  0.40573101
+## T09 -0.02941530  0.05633947 -0.005873644  0.62688354 -0.35953159
+## T10 -0.10902874 -0.03851023 -0.213397638  0.31720639 -0.38195480
+##             T06         T07         T08          T09         T10
+## T01  0.15512139  0.12300849  0.17756018 -0.029415299 -0.10902874
+## T02  0.04977726  0.20415741  0.09396546  0.056339466 -0.03851023
+## T03  0.26757519  0.30777089  0.16505004 -0.005873644 -0.21339764
+## T04  0.23944206  0.28700040 -0.14058230  0.626883538  0.31720639
+## T05  0.07460181  0.09449224  0.40573101 -0.359531588 -0.38195480
+## T06  1.00000000  0.17131751  0.15851631  0.088929446 -0.05095597
+## T07  0.17131751  1.00000000  0.13081366  0.139311020 -0.04846755
+## T08  0.15851631  0.13081366  1.00000000 -0.213223444 -0.42481427
+## T09  0.08892945  0.13931102 -0.21322344  1.000000000  0.53414665
+## T10 -0.05095597 -0.04846755 -0.42481427  0.534146647  1.00000000</code></pre>
+<p>And to access the correlation p values:</p>
+<pre class="sourceCode r"><code class="sourceCode r">correlation_results_1$p</code></pre>
+<pre><code>##              T01          T02          T03          T04          T05
+## T01 0.000000e+00 9.353678e-01 2.703252e-02 1.000000e+00 3.752067e-08
+## T02 9.353678e-02 0.000000e+00 3.008077e-03 1.713369e-06 1.000000e+00
+## T03 1.689533e-03 1.367308e-04 0.000000e+00 2.194899e-02 5.012790e-11
+## T04 4.181904e-01 5.908171e-08 1.219389e-03 0.000000e+00 1.118838e-10
+## T05 1.172521e-09 2.422115e-01 1.392442e-12 3.290701e-12 0.000000e+00
+## T06 6.532673e-05 2.029195e-01 3.103295e-12 5.245031e-10 5.616458e-02
+## T07 1.557355e-03 1.272752e-07 6.661338e-16 6.084022e-14 1.532158e-02
+## T08 4.518575e-06 1.590406e-02 2.060865e-05 2.977260e-04 0.000000e+00
+## T09 4.512846e-01 1.491643e-01 8.804627e-01 0.000000e+00 0.000000e+00
+## T10 5.147611e-03 3.247088e-01 3.329981e-08 0.000000e+00 0.000000e+00
+##              T06          T07          T08          T09          T10
+## T01 1.502515e-03 2.647503e-02 1.220015e-04 1.000000e+00 7.721416e-02
+## T02 1.000000e+00 3.563706e-06 2.145021e-01 1.000000e+00 1.000000e+00
+## T03 1.086153e-10 2.531308e-14 5.152163e-04 1.000000e+00 1.032294e-06
+## T04 1.730860e-08 2.251088e-12 6.252246e-03 0.000000e+00 0.000000e+00
+## T05 6.178104e-01 2.145021e-01 0.000000e+00 0.000000e+00 0.000000e+00
+## T06 0.000000e+00 2.619772e-04 1.075356e-03 2.728077e-01 1.000000e+00
+## T07 1.007605e-05 0.000000e+00 1.447929e-02 6.761338e-03 1.000000e+00
+## T08 4.480652e-05 7.620681e-04 0.000000e+00 1.032294e-06 0.000000e+00
+## T09 2.273398e-02 3.380669e-04 3.337590e-08 0.000000e+00 0.000000e+00
+## T10 1.927558e-01 2.147224e-01 0.000000e+00 0.000000e+00 0.000000e+00</code></pre>
+<p>Let’s try the other function parameters:</p>
+<ul>
+<li><p>Use the path_name parameter to specify where you want your output files to go (default is your home directory, “~/”)</p></li>
+<li><p>Use the data_name parameter to specify a name for your output files (default is “data”)</p></li>
+</ul>
+<p>Here’s an example where we change data_name:</p>
+<pre class="sourceCode r"><code class="sourceCode r">correlation_results_2 &lt;-<span class="st"> </span>nicertables::<span class="kw">make_corr_tables</span>(<span class="dt">input_data =</span> raw_data_for_correlation_function, <span class="dt">path_name =</span> <span class="st">&quot;~/&quot;</span>, <span class="dt">data_name =</span> <span class="st">&quot;my_name&quot;</span>)</code></pre>
+<p>We now how two output files, “corrs_mat_my_name.csv” and “corrs_mat_my_name.csv”, located in your home directory.</p>
+</div>
+<div id="how-to-use-the-make_reg_tables-function" class="section level2">
+<h2>2. How to use the make_reg_tables() function</h2>
+<p>Coming soon …</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
