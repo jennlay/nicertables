@@ -1,0 +1,30 @@
+Package: nicertables
+Title: Make Nice Correlation and Logistic Regression Tables from Raw Data
+Version: 0.0.0.9000
+Authors@R: person("Jennifer", "Lay", email = "jennifer.lay@psych.ubc.ca", role = c("aut", "cre"))
+Description: This package contains functions that take either a) raw data or b)
+    badly-formatted analysis output and transforms it into results tables that are
+    ready to use for other purposes. There is currently one function that creates
+    a correlation table from raw data and outputs it to a csv file, and another
+    function that takes logistical regression output from a totally unformatted text
+    document (Mplus output) and puts it into a data frame. These are convenience
+    functions that are useful for the author's current data analytical work.
+Depends:
+    R (>= 3.3.2)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    psych,
+    stats,
+    readr,
+    stringr,
+    dplyr,
+    tidyr,
+    pander,
+    tidyverse
+RoxygenNote: 5.0.1
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
